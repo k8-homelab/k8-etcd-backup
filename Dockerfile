@@ -17,7 +17,7 @@ RUN rm -Rf /tmp/etcd
 
 # PERMISSIONS
 COPY --chown=1000 ./app /app
-RUN chown 1000 /backup
+RUN chown 1000 /backup && chmod +x /app/backup.sh
 WORKDIR /app
 
 RUN echo "user:x:1000:1000:Unprivileged User:/home/user:/bin/bash" >> /etc/passwd

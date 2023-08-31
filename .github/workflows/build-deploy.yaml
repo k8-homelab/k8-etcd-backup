@@ -20,7 +20,7 @@ jobs:
         with:
           registry: registry.hibbard.dev
           image: homelab/${{ github.event.repository.name }}
-          tag: latest
+          tag_with_latest: "true"
           username: ${{ secrets.HARBOR_USER }}
           password: ${{ secrets.HARBOR_PASS }}
           cache: true
