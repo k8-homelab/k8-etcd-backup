@@ -1,2 +1,2 @@
 namespace: etcd-backup
-storageClassName: synology-iscsi-ext4
+storageClassName: synology-iscsi-ntfs
