@@ -48,6 +48,16 @@ spec:
             runAsNonRoot: true
             fsGroupChangePolicy: Always
 
+          initContainers:
+          - name: volume-permission
+            image: busybox
+            command: ["sh", "-c", "chown -R 1000:1000 /backup"]
+            volumeMounts:
+            - name: backup-dir
+              mountPath: /backup
+            securityContext:
+              runAsUser: 0
+
           containers:
             - name: etcd-backup
               image: registry.hibbard.dev/homelab/{{ .Chart.Name }}:latest
