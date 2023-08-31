@@ -1,0 +1,16 @@
+apiVersion: skaffold/v2beta25
+kind: config
+deploy:
+  helm:
+    hooks:
+      before:
+      - host:
+          command: ["helm", "dependency", "update", "helm"]
+    releases:
+    - name: etcd-backup
+      namespace: etcd-backup
+      chartPath: helm
+      createNamespace: true
+      valuesFiles:
+      - helm/values.yaml
+      upgradeOnChange: true

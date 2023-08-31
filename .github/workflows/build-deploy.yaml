@@ -1,0 +1,38 @@
+name: build and push
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build-deploy:
+    runs-on: 
+      - self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Build Image
+        uses: aevea/action-kaniko@master
+        with:
+          registry: registry.home.lab
+          image: homelab/${{ github.event.repository.name }}
+          username: ${{ secrets.HARBOR_USER }}
+          password: ${{ secrets.HARBOR_PASS }}
+          cache: true
+      
+      - name: Deploy To Argo
+        uses: clowdhaus/argo-cd-action/@main
+        with:
+          command: app create ${{ github.event.repository.name }}
+          options: >
+            --server argo.home.lab
+            --auth-token ${{ secrets.ARGO_TOKEN }}
+            --insecure
+            --repo git@github.com:k8-homelab/${{ github.event.repository.name }}.git
+            --path helm
+            --upsert
+            --sync-policy auto
+            --dest-server https://kubernetes.default.svc

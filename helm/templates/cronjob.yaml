@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{  .Chart.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+spec:
+  schedule: "0 * * * *"  # Runs every hour
+  concurrencyPolicy: Forbid
+
+  # Job history limit in the Kubernetes cluster
+  failedJobsHistoryLimit: 10
+  successfulJobsHistoryLimit: 5
+
+  jobTemplate:
+    metadata:
+      name: {{ .Chart.Name }}
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/instance: {{ .Release.Name }}
+            app.kubernetes.io/name: {{  .Chart.Name }}
+            app.kubernetes.io/version: {{ .Chart.AppVersion }}
+            helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        spec:
+          restartPolicy: Never
+          imagePullSecrets:
+            - name: harbor-credentials
+
+          volumes:
+            - name: etcd-certs
+              secret:
+                secretName: etcd-certs
+            - name: backup-dir
+              persistantVolumneClaim:
+                claimName: {{ .Chart.Name }}
+
+          containers:
+            - name: etcd-backup
+              image: registry.hibbard.dev/homelab/{{ .Chart.Name }}:main
+              volumeMounts:
+                - name: etcd-certs
+                  mountPath: /var/run/secrets/etcd-certs
+                  readOnly: true
+                - name: backup-dir
+                  mountPath: /backup
+
+              resources:
+                requests:
+                  cpu: "0.2"
+                  memory: "100Mi"
+                limits:
+                  cpu: ".5"
+                  memory: "200Mi"
