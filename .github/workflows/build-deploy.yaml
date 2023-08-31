@@ -19,7 +19,8 @@ jobs:
         uses: aevea/action-kaniko@master
         with:
           registry: registry.hibbard.dev
-          image: homelab/${{ github.event.repository.name }}:latest
+          image: homelab/${{ github.event.repository.name }}
+          tag: latest
           username: ${{ secrets.HARBOR_USER }}
           password: ${{ secrets.HARBOR_PASS }}
           cache: true
