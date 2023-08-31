@@ -1,6 +1,6 @@
 FROM alpine
 RUN apk update && apk upgrade
-RUN apk add curl fuse
+RUN apk add curl
 
 ENV ETCD_VER=v3.4.27
 ENV URL=https://storage.googleapis.com/etcd
