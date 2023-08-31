@@ -38,7 +38,7 @@ spec:
               secret:
                 secretName: etcd-certs
             - name: backup-dir
-              persistantVolumeClaim:
+              persistentVolumeClaim:
                 claimName: {{ .Chart.Name }}
 
           containers:
