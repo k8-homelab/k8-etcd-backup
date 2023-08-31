@@ -41,6 +41,9 @@ spec:
               persistentVolumeClaim:
                 claimName: {{ .Chart.Name }}
 
+          securityContext:
+            fsGroup: 1000
+
           containers:
             - name: etcd-backup
               image: registry.hibbard.dev/homelab/{{ .Chart.Name }}:latest
@@ -55,11 +58,10 @@ spec:
                   mountPath: /backup
 
               securityContext:
-                fsGroup: 1000
                 runAsUser: 1000
                 runAsGroup: 1000
                 runAsNonRoot: true
-
+              
               resources:
                 requests:
                   cpu: 200m
