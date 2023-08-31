@@ -43,10 +43,6 @@ spec:
 
           securityContext:
             fsGroup: 1000
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            fsGroupChangePolicy: Always
 
           initContainers:
           - name: volume-permission
@@ -56,25 +52,31 @@ spec:
             - name: backup-dir
               mountPath: /backup
             securityContext:
+              runAsNonRoot: false
               runAsUser: 0
 
           containers:
-            - name: etcd-backup
-              image: registry.hibbard.dev/homelab/{{ .Chart.Name }}:latest
-              command:
-                - "sleep"
-                - "604800"
-              volumeMounts:
-                - name: etcd-certs
-                  mountPath: /var/run/secrets/etcd-certs
-                  readOnly: true
-                - name: backup-dir
-                  mountPath: /backup
+          - name: etcd-backup
+            image: registry.hibbard.dev/homelab/{{ .Chart.Name }}:latest
+            command:
+              - "sleep"
+              - "604800"
+            volumeMounts:
+              - name: etcd-certs
+                mountPath: /var/run/secrets/etcd-certs
+                readOnly: true
+              - name: backup-dir
+                mountPath: /backup
 
-              resources:
-                requests:
-                  cpu: 200m
-                  memory: 100Mi
-                limits:
-                  cpu: 500m
-                  memory: 200Mi
+            resources:
+              requests:
+                cpu: 200m
+                memory: 100Mi
+              limits:
+                cpu: 500m
+                memory: 200Mi
+
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              runAsNonRoot: true
