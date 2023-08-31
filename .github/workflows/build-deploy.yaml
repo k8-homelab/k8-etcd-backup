@@ -14,12 +14,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Build Image
         uses: aevea/action-kaniko@master
         with:
           registry: registry.hibbard.dev
-          image: homelab/${{ github.event.repository.name }}
+          image: homelab/${{ github.event.repository.name }}:latest
           username: ${{ secrets.HARBOR_USER }}
           password: ${{ secrets.HARBOR_PASS }}
           cache: true

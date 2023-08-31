@@ -43,7 +43,7 @@ spec:
 
           containers:
             - name: etcd-backup
-              image: registry.hibbard.dev/homelab/{{ .Chart.Name }}:main
+              image: registry.hibbard.dev/homelab/{{ .Chart.Name }}:latest
               volumeMounts:
                 - name: etcd-certs
                   mountPath: /var/run/secrets/etcd-certs
