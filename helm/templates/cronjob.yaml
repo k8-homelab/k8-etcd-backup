@@ -44,6 +44,9 @@ spec:
           containers:
             - name: etcd-backup
               image: registry.hibbard.dev/homelab/{{ .Chart.Name }}:latest
+              command:
+                - "sleep"
+                - "604800"
               volumeMounts:
                 - name: etcd-certs
                   mountPath: /var/run/secrets/etcd-certs
