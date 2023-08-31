@@ -1,6 +1,6 @@
 FROM alpine
 RUN apk update && apk upgrade
-RUN apk add curl exfat-fuse exfat-utils
+RUN apk add curl fuse
 
 ENV ETCD_VER=v3.4.27
 ENV URL=https://storage.googleapis.com/etcd
