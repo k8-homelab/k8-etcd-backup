@@ -1,5 +1,5 @@
 apiVersion: v2
-name: etcd-backup
+name: k8-etcd-backup
 description: Cronjob to backup etcd database to a PVC
 
 type: application
