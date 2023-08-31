@@ -56,7 +56,6 @@ spec:
 
               securityContext:
                 fsGroup: 1000
-                fsGroupChangePolicy: "Always"
                 runAsUser: 1000
                 runAsGroup: 1000
                 runAsNonRoot: true
