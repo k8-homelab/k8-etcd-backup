@@ -43,6 +43,10 @@ spec:
 
           securityContext:
             fsGroup: 1000
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroupChangePolicy: Always
 
           containers:
             - name: etcd-backup
@@ -57,11 +61,6 @@ spec:
                 - name: backup-dir
                   mountPath: /backup
 
-              securityContext:
-                runAsUser: 1000
-                runAsGroup: 1000
-                runAsNonRoot: true
-              
               resources:
                 requests:
                   cpu: 200m
