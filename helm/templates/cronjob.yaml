@@ -44,6 +44,7 @@ spec:
           securityContext:
             fsGroup: 1000
 
+          # Synology iscsi does not honor fsgroups (currently).  This is the way.
           initContainers:
           - name: volume-permission
             image: busybox
