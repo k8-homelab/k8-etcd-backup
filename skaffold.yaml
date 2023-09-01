@@ -7,8 +7,8 @@ deploy:
       - host:
           command: ["helm", "dependency", "update", "helm"]
     releases:
-    - name: etcd-backup
-      namespace: etcd-backup
+    - name: k8-etcd-backup
+      namespace: k8-etcd-backup
       chartPath: helm
       createNamespace: true
       valuesFiles:
