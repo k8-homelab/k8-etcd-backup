@@ -1,4 +1,4 @@
-name: build and push
+name: build and deploy
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Build Image
+      - name: Build Kaniko Image
         uses: aevea/action-kaniko@master
         with:
           registry: registry.hibbard.dev
