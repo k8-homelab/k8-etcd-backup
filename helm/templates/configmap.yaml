@@ -9,4 +9,4 @@ metadata:
     app.kubernetes.io/version: {{ .Chart.AppVersion }}
     helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 data:
-  etcd-host: {{ .Values.etcd-host }}
+  etcd-host: {{ index .Values "etcd-host" }}
