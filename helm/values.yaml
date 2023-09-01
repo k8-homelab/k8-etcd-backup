@@ -1,2 +1,3 @@
 namespace: etcd-backup
 storageClassName: nfs-csi
+etcd-host: 10.0.20.50

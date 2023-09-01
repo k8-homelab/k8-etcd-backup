@@ -57,13 +57,17 @@ spec:
 
           containers:
           - name: etcd-backup
-            image: registry.hibbard.dev/homelab/{{ .Chart.Name }}:latest
+            image: registry.hibbard.dev/homelab/{{ .Chart.Name }}:main
             volumeMounts:
               - name: etcd-certs
                 mountPath: /var/run/secrets/etcd-certs
                 readOnly: true
               - name: backup-dir
                 mountPath: /backup
+
+            envFrom:
+            - configMapRef:
+                name: etcd-host
 
             resources:
               requests:

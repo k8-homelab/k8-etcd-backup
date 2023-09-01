@@ -1,4 +1,4 @@
-name: build and push
+name: deploy
 
 on:
   workflow_dispatch:
@@ -7,24 +7,11 @@ on:
       - 'main'
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: 
       - self-hosted
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Build Image
-        uses: aevea/action-kaniko@master
-        with:
-          registry: registry.hibbard.dev
-          image: homelab/${{ github.event.repository.name }}
-          tag_with_latest: "true"
-          username: ${{ secrets.HARBOR_USER }}
-          password: ${{ secrets.HARBOR_PASS }}
-          cache: true
-      
+    steps:      
       - name: Deploy To Argo
         uses: clowdhaus/argo-cd-action/@main
         with:
