@@ -65,9 +65,12 @@ spec:
               - name: backup-dir
                 mountPath: /backup
 
-            envFrom:
-            - configMapRef:
-                name: etcd-host
+            env:
+              - name: ETCD_HOST
+                valueFrom:
+                  configMapKeyRef:
+                    name: etcd-host
+                    key: etcd-host
 
             resources:
               requests:
